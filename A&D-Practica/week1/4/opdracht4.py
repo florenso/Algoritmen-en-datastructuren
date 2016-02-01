@@ -17,22 +17,19 @@ for i in range(1, numberOfClassrooms):
 peopleSameDate = []
 i = 0;
 for oneClassRoom in schoolOfPeople:
-    seen = set()
-    uniqDays = []
-    numberOfDuplicates = 0
+    peopleInSameClass = False
     for onePerson in oneClassRoom:
-        if onePerson not in seen:
+        if not peopleInSameClass:
             if(oneClassRoom.count(onePerson) >= 2):
-                uniqDays.append(oneClassRoom.count(onePerson))
-                seen.add(onePerson)
+                peopleInSameClass = True
 
     #print(sum(uniqDays))
-    peopleSameDate.append(sum(uniqDays))
+    peopleSameDate.append(peopleInSameClass)
 
 
-print("Er zijn 2 mensen op dezelfde dag jarig in ",peopleSameDate.count(2)," klassen van de ", numberOfClassrooms ," klassen met",numberOfPeoplePerClassroom," mensen per klas", )
-print("Hoeveel keer zijn er van de ", numberOfClassrooms ," klassen met ",numberOfPeoplePerClassroom," mensen, 3 op dezelfde dag jarig:", peopleSameDate.count(3))
+print("Er zijn 2 mensen op dezelfde dag jarig in ",peopleSameDate.count(True)," klassen van de ", numberOfClassrooms ," klassen met",numberOfPeoplePerClassroom," mensen per klas", )
 
-print(len(peopleSameDate),"\n")
 print(peopleSameDate)
 #print(sorted(peopleSameDate,  key=lambda x: x[1]))
+
+print("De kans dat er twee mensen in een klas van 23 mensen op dezelfde dag jarig zijn is: ", (peopleSameDate.count(True) / numberOfClassrooms))
