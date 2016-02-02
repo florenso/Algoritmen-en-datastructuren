@@ -10,14 +10,15 @@ def find_primes(limit):
             prm[i2] = False
 
     count = 0
+    all_primes = []
     for i in prm:
         if prm[i]:
-            print(i)
+            all_primes.append(i)
             count+=1
-    return count
+    return all_primes
 
 #print(primes_sieve1(1000))
-print('in totaal zijn er ',find_primes(1000),' priem getallen')
+print('Dit zijn de priemgetallen onder 1000: ',find_primes(1000))
 
 
 
