@@ -1,11 +1,14 @@
-def machtv2(a,n):
-    if n == 0:
+def herhaaldKwadrateren(grondgetal,macht):
+    if macht == 0:
         return 1
-    if n < 0:
-        return 1/machtv2(a,-n);
-    m = 1
-    for dummy in range(0,n): # dummy,unused,_ : Python kent geen n.times
-        m = m*a;
-    return m
+    resultaat = 1
+    if(macht % 2 == 1):
+        macht -= 1
+        resultaat *= grondgetal
 
-print("2 ^ 8: ", machtv2(2,8))
+    for dummy in range(0, macht, 2):
+        resultaat *= (grondgetal * grondgetal)
+
+    return resultaat
+
+print("Herhaald kwadrateren: 4005 ^ 465: ", herhaaldKwadrateren(4005,465))
