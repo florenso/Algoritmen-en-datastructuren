@@ -8,56 +8,74 @@ class ListNode:
 
 class MyLinkedList:
     def __init__(self):
-        self.head = None
         self.tail = None
 
     def __repr__(self):
         s = ''
-        current = self.head
-        if current != None:
-            s = s + str(current)
-            current = current.next
-        while current != None:
-            s = s + " -> " + str(current)
-            current = current.next
-        if not s: # s == '':
-            s = 'empty list'
+        if self.tail != None:
+            current = self.tail.next
+            s= s + str(current)         #prints head
+            if self.tail != current:    #checks if there is more then one item in list
+                current = current.next
+                while current != self.tail.next:    #print loop for items in list
+                    s = s + " -> " + str(current)
+                    current=current.next
+        else:
+            s= 'empty list'
         return s
 
     def addLast(self,e):
-        if not self.head: # self.head == None:
-            self.head = ListNode(e,None)
-            self.tail = self.head
+        if self.tail == None:
+            self.tail = ListNode(e,self.tail)
+            self.tail.next=self.tail
         else:
-            n = ListNode(e,None)
+            n = ListNode(e,self.tail.next)
             self.tail.next = n
-            self.tail = self.tail.next
+            self.tail = n
+
 
     def delete(self,e):
-        if self.head: # self.head != None:
-            if self.head.data == e:
-                self.head = self.head.next
-                if self.head == None:
-                    self.tail = None
+        if self.tail == None:
+            print('cant delete, empty list')
+        elif self.tail == self.tail.next:
+            if e == self.tail.data:
+                print('deleted:',e)
+                del self.tail
+                self.tail = None
             else:
-                current = self.head
-                while current.next != None and current.next.data != e:
-                    current = current.next
-                if current.next != None:
-                    current.next = current.next.next
-                if current.next == None:
-                    self.tail = current
+                print(e,'not found, cant delete')
+        else:
+            current = self.tail
+            while current.next != self.tail:
+                if current.next.data == e:
+                    tmp = current.next
+                    current.next= current.next.next
+                    del tmp
+                    print('deleted:',e)
+                current=current.next
 
-if __name__ == '__main__':
-    mylist =  MyLinkedList()
-    print(mylist)
-    mylist.addLast(1)
-    mylist.addLast(2)
-    mylist.addLast(3)
-    print(mylist)
-    mylist.delete(2)
-    print(mylist)
-    mylist.delete(1)
-    print(mylist)
-    mylist.delete(3)
-    print(mylist)
+
+
+mylist =  MyLinkedList()
+print(mylist)
+mylist.addLast(1)
+mylist.addLast(2)
+mylist.addLast(3)
+mylist.addLast(4)
+mylist.addLast(5)
+mylist.addLast(6)
+print(mylist)
+mylist.delete(2)
+print(mylist)
+mylist.delete(1)
+print(mylist)
+mylist.delete(3)
+print(mylist)
+mylist.delete(4)
+print(mylist)
+mylist.delete(5)
+mylist.delete(5)
+print(mylist)
+mylist.delete(6)
+print(mylist)
+mylist.delete(5)
