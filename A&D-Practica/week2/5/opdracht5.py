@@ -1,6 +1,6 @@
 import sys
 
-sys.setrecursionlimit(1000000)
+sys.setrecursionlimit(1000000000)
 
 def swap(a,i,j):
     a[i],a[j] = a[j],a[i]
@@ -14,11 +14,15 @@ wcs = False
 def rqsort(a,low,high):
     global count
     global wcs
-    #count =  count + 1
+    count =  count + 1
     if low < high:
 
         if wcs:
-            pivot = a[low:high].index(min(a[low:high]))
+            pivot = a[low:high].index(min(a[low:high]))+low
+
+            #print(low,high,pivot)
+            #print (a[pivot])
+            #print(a[low:high])
         else:
             pivot = random.randint(low,high)
 
@@ -46,21 +50,21 @@ def qsort(a):
 testList = []
 
 a = 0
-while a < 1000:
+while a < 10000:
     a += 1
     testList.append( random.randint( 0, 1000000 ) )
 
-testlist1=testList
-print( testList )
+testlist1=list(testList)
+#print( testList )
 
 print('normal test')
 qsort( testList )
 print(count)
-print( testList )
+#print( testList )
 
 
 print('worst case test')
 wcs=True
 qsort( testlist1 )
 print(count)
-print( testlist1 )
+#print( testlist1 )
