@@ -153,10 +153,10 @@ class BSTNode:
 class BST:
     def __init__(self,a=None):
         if a:
-            mid = len(a)//2
-            self.root = BSTNode(a[mid],None,None)
-            self.root.insertArray(a[:mid])
-            self.root.insertArray(a[mid+1:])
+            self.mid = len(a)//2
+            self.root = BSTNode(a[self.mid],None,None)
+            self.root.insertArray(a[:self.mid])
+            self.root.insertArray(a[self.mid+1:])
         else:
             self.root = None
 
@@ -172,31 +172,55 @@ class BST:
         else:
             return None
 
-    def max(self):
+    def max(self): ##self written function
         if self.root:
             return self.root.right
         else:
             return None
 
-    def rsearch(self,value):
-        if self.root:
-            current = self.root
-            found = False
-            if current.element < value:
-                current = current.right
-                self.rsearch(current.element)
-            elif current.element > value:
-                current = current.left
-                self.rsearch(current.element)
-            else:
-                found = True
+    def rsearch(self, value, currentNode): ##self written function
+        if(currentNode == None):
+            return False
+        return currentNode.element == value or self.rsearch(value, currentNode.left) or self.rsearch(value, currentNode.right)
 
-            if found:
-                return current
+    def rinsert(self, value, currentNode): ##self written function
+        if self.root:
+            if not self.rsearch(value, self.root): #searching for value.
+                if value < currentNode.element:
+                    if currentNode.left != None:
+                        self.rinsert(value, currentNode.left)
+                    else:
+                        currentNode.left = BSTNode(value,None,None)
+
+                if value > currentNode.element:
+                    if currentNode.right != None:
+                        self.rinsert(value, currentNode.right)
+                    else:
+                        currentNode.right = BSTNode(value, None, None)
             else:
                 return None
         else:
-            return None
+            self.root = BSTNode(value,None,None)
+            return True
+
+    def showLevelNumber(self, level, currentNode):
+        if currentNode == None:
+            return
+        elif level == 1:
+            print(currentNode)
+        elif level > 1:
+            self.showLevelNumber(level - 1, currentNode.left)
+            self.showLevelNumber(level - 1, currentNode.right)
+
+    def showLevelOrder(self):
+        height = self.mid
+        for ita in range(1, height):
+
+            print("Current LEVEL IS: ", ita)
+            print("------------------------")
+            self.showLevelNumber(ita, self.root)
+            print("========================")
+
 
     def insert(self,e):
         if e:
@@ -230,20 +254,29 @@ class BST:
 
 if __name__ == '__main__':
     b = BST([1,2,3])
-
-    print(b)
+    print("Printing level order: ")
+    b.showLevelOrder()
+    #print(b)
     print('----------------')
     b = BST([1,2,3,4])
     b.max()
     print(b)
     print('----------------')
     b = BST([1,2,3,4,5,6,7,8,9,10])
-    print(b)
+    print("Printing level order: ")
+    b.showLevelOrder()
+    #print(b)
     print('----------------')
 
     b = BST([1,2,3,4,5,6,67,89,7,8,9,10,11,12,13,14,15,17,45,2])
-    print("Kippetjes: " ,b.rsearch(10))
-    print(b)
+    ##starting self written function:
+    print("Max value in BST?:" , b.max())
+    print("Recursive search, does 13 exists in BST?:" , b.rsearch(13, b.root))
+    print("Inserting Number 19 in BST:" , b.rinsert(19, b.root))
+    print('BEGIN PRINTING IN BST NODE')
+    b.showLevelOrder()
+    print('ENDING PRINTING')
+    #print(b)
     node = b.search(3)
     if node != None:
         print(node.element)
