@@ -1,28 +1,66 @@
 from collections import Counter
 from operator import itemgetter
 
+
 def readFile(fileName):
-    f = open(fileName,'r') # open een file om uit te lezen
+    f = open( fileName, 'r' )  # open een file om uit te lezen
     full_text = ""
     for line in f:
         full_text += line
+
+    for i in full_text:  # clears numbers
+        if not i.isalpha( ):
+            full_text = full_text.replace( i, ' ' )
     return full_text
 
 
 def convertTextToList(the_text):
-    for i in the_text:
-        if not i.isalpha():
-            the_text = the_text.replace(i , ' ')
-    return [x for x in the_text.split(' ') if x]
+    return [x for x in the_text.split( ' ' ) if x]
+
 
 def findWordFrequencyMethod1(full_text):
-    full_text = Counter(full_text)
-    return sorted(full_text.items(), key=itemgetter(0))
+    full_text = Counter( full_text )
+    return sorted( full_text.items( ), key=itemgetter( 0 ) )
+
 
 def findWordFrequencyMethod2(full_text):
-    print("Todo")
+    return putInTrie( readFile( "kip.txt" ) ).getListTrie()
+
+
+class trieNode:
+    def __init__(self):
+        self.count = 0
+        self.next = {}
+
+    def addNext(self, key):
+        if self.next == {}:
+            self.next = {key: trieNode()}
+        else:
+            if key not in self.next:
+                self.next[key] = trieNode()
+        return self.next[key]
+
+    def getListTrie(self,retList=[],woord=''):
+        if self.count >0:
+            retList.append({woord:self.count})
+        for henk in sorted(self.next):
+            self.next.get(henk).getListTrie(retList,woord+henk)
+        return retList
+
+def putInTrie(fullText):
+    root = trieNode( )
+    i = root
+    for char in fullText:
+        if char == ' ':
+            i.count += 1
+            i = root
+        else:
+            i=i.addNext(char)
+    root.count =0#set root count to zero (root cant be a woord)
+    return root
 
 
 
+print( "Method one is: ", findWordFrequencyMethod1( convertTextToList( readFile( "kip.txt" ) ) ) )
+print("Method two is: ",findWordFrequencyMethod2(readFile( "kip.txt" )))
 
-print("Method one is: ", findWordFrequencyMethod1(convertTextToList(readFile("kip.txt"))))
