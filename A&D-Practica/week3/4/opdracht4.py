@@ -24,7 +24,7 @@ def findWordFrequencyMethod1(full_text):
 
 
 def findWordFrequencyMethod2(full_text):
-    return putInTrie( readFile( "kip.txt" ) ).getListTrie()
+    return putInTrie( full_text ).getListTrie()
 
 
 class trieNode:
