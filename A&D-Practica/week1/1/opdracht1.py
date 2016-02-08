@@ -1,5 +1,5 @@
 def mymax(listOfValues):
-    maxValue = 0
+    maxValue = -float('inf')
 
     if(len(listOfValues) == 0):
         print("ERROR: LIST IS EMPTY")
