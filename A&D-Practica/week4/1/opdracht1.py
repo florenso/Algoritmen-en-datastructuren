@@ -1,11 +1,11 @@
 import math
+import random
 
 class ChainingHashDemo:
     def __init__(self):
         self.len = 7
         self.hashTableSet = [None]*self.len
-        itera = 0
-        for dummy in self.hashTableSet:
+        for itera, dummy in enumerate(self.hashTableSet):
             self.hashTableSet[itera] = set()
             itera += 1
 
@@ -16,10 +16,9 @@ class ChainingHashDemo:
                    return True
         return False
 
-    def isTherePlaceForUs(self):
-        itera = 0
+    def countFillingDegree(self):
         currentFillingDegree = 0
-        for value in self.hashTableSet:
+        for itera, value in enumerate(self.hashTableSet):
             currentFillingDegree += len(set(value))
             if (currentFillingDegree / self.len) > 0.75:
                 return False
@@ -29,7 +28,7 @@ class ChainingHashDemo:
         hashTemp = hash(e) % self.len
 
         if not self.search(e):
-            if not self.isTherePlaceForUs():
+            if not self.countFillingDegree():
                 self.rehash(self.len * 2) #rehasing table two times the size.
 
             valuesInSet = set( self.hashTableSet[ hashTemp] )
@@ -42,8 +41,7 @@ class ChainingHashDemo:
 
     def delete(self, e):
         if self.search(e):
-            itera = 0
-            for theSet in self.hashTableSet:
+            for itera, theSet in enumerate(self.hashTableSet):
                 if set(theSet).__contains__(e):
                     currentSet = set(theSet)
                     currentSet.remove(e)
@@ -55,17 +53,15 @@ class ChainingHashDemo:
 
     def __repr__(self):
         output_string = "\n====HASHING TABLE====\n"
-        itera = 0
-        for value in self.hashTableSet:
+        for itera, value in enumerate(self.hashTableSet):
             output_string += "["+ str(itera) +" = " + str(value) + "]\n"
             itera += 1
-        output_string += "len = " + str(self.len)
+        output_string += "\nlen = " + str(self.len)
         return output_string
 
     def rehash(self, newLen):
         tempList = [None]*newLen
-        itera = 0
-        for dummy in tempList:
+        for itera, dummy in enumerate(tempList):
             tempList[itera] = set()
             itera += 1
 
@@ -82,26 +78,20 @@ class ChainingHashDemo:
 
 chd = ChainingHashDemo()
 
-chd.insert(8.3) #
-chd.insert(8.3)
+listOfRandomValues = [random.uniform(1.3,600) for _ in range (200)]
 
-#chd.delete(8.3)
 
-chd.insert(4.3) #
-chd.insert(2.23) #
-chd.insert(4.12) #
-chd.insert(12.34) #
 
-#chd.delete(12.34)
+for currentNumber in listOfRandomValues:
+    chd.insert(currentNumber)
 
-chd.insert(32.34) #
-chd.insert(13.34) #
-chd.insert(56.34) #
-chd.insert(5.34)#
-chd.insert(5.34)
-chd.insert(45)
-chd.insert(23)
-#chd.insert(90)
-#chd.insert(190)
+print("\n=====INSERTED 200 NUMBERS\n")
 print(chd)
+print("==========================\n")
+
+print("\n=====REMOVED 100 NUMBERS")
+for currentNumber in listOfRandomValues[100:]:
+    chd.delete(currentNumber)
+print(chd)
+print("==========================\n")
 
