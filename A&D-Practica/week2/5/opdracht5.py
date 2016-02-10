@@ -50,7 +50,7 @@ def qsort(a):
 testList = []
 
 a = 0
-while a < 10000:
+while a < 9000:
     a += 1
     testList.append( random.randint( 0, 1000000 ) )
 
