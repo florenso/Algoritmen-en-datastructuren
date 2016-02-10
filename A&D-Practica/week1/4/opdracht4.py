@@ -5,13 +5,13 @@ def generateRandomList(minNumber, maxNumber, numberOfItems):
 
 numberOfDays = 365
 numberOfPeoplePerClassroom = 23
-numberOfClassrooms = 100
+numberOfClassrooms = 10000
 
 
 
 schoolOfPeople = []
 
-for i in range(1, numberOfClassrooms):
+for i in range(numberOfClassrooms):
     schoolOfPeople.append(generateRandomList(1,numberOfDays,numberOfPeoplePerClassroom))
 
 peopleSameDate = []
