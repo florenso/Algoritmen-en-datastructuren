@@ -52,7 +52,7 @@ def keerOm(G):
 # 5 = opgave 4.1
 # 6 = opgave 4.2
 # 7 = opgave 5.1
-graaf = 6
+graaf = 1
 G=None
 v=None
 if graaf == 1:
