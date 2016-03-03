@@ -48,11 +48,13 @@ def bracketsCheck(brackets):
         if isOpenBracket(tmp):
             stack.push(tmp)
         elif isCloseBracket(tmp):
-            if getCloseBracket(stack.peek(-1)) == tmp:
-                stack.pop()
-            else:
+            try:
+                if getCloseBracket(stack.peek(-1)) == tmp:
+                    stack.pop()
+                else:
+                    return False
+            except IndexError:
                 return False
-
     return stack.isEmpty()
 
 
