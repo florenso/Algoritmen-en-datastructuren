@@ -1,4 +1,5 @@
 import queue
+
 INFINITY = float("inf")
 class myqueue( list):
 
@@ -30,8 +31,89 @@ def edges(G):
             a.append((u,v))
     return a
 
-v = [Vertex(i) for i in range(5)]
-G = {v[0]:[v[1]],v[1]:[v[0],v[2],v[3],v[4]],v[2]:[v[1],v[3]],v[3]:[v[1],v[2]],v[4]:[]}
+
+# 1 = opgave 1.1
+# 2 = opgave 1.2
+# 3 = opgave 2.1
+# 4 = opgave 3.1
+# 5 = opgave 4.1
+# 6 = opgave 4.2
+# 7 = opgave 5.1
+graaf = 2
+G=None
+v=None
+if graaf == 1:
+    #eerste graaf
+    v = [Vertex(i) for i in range(8)]
+    G = {v[0]:[v[4],v[5]],
+         v[1]:[v[4],v[5],v[6]],
+         v[2]:[v[4],v[5],v[6]],
+         v[3]:[v[7]],
+         v[4]:[v[0],v[1],v[2],v[5]],
+         v[5]:[v[4],v[0],v[1],v[2]],
+         v[6]:[v[1],v[2]],
+         v[7]:[v[3]]}
+elif graaf ==2:
+    #tweede graaf
+    v = [Vertex(i) for i in range(7)]
+    G = {v[0]:[v[4],v[5]],
+         v[1]:[v[4],v[5],v[6]],
+         v[2]:[v[4],v[5],v[6]],
+         #v[3]:[],
+         v[4]:[v[0],v[1],v[2],v[5]],
+         v[5]:[v[4],v[0],v[1],v[2]],
+         v[6]:[v[1],v[2]]}
+
+elif graaf ==3:
+    v = [Vertex(i) for i in range(8)]
+    G = {
+    v[0]:[v[5],v[4]],
+    v[1]:[v[4],v[6]],
+    v[2]:[v[5]],
+    v[3]:[v[7]],
+    v[4]:[v[0],v[1]],
+    v[5]:[v[0],v[2]],
+    v[6]:[v[1]],
+    v[7]:[v[3]]
+    }
+elif graaf ==4:
+    v = [Vertex(i) for i in range(8)]
+    G = {
+    v[0]:[v[1],v[3]],
+    v[1]:[v[0],v[2]],
+    v[2]:[v[1],v[4],v[3]],
+    v[3]:[v[0],v[2]],
+    v[4]:[v[2],v[5],v[6]],
+    v[5]:[v[4],v[6]],
+    v[6]:[v[4],v[5],v[7]],
+    v[7]:[v[6]]
+    }
+elif graaf ==5:
+    v = [Vertex(i) for i in range(3)]
+    G = {
+    v[0]:[v[1]],
+    v[1]:[v[2]],
+    v[2]:[v[0]],
+    }
+elif graaf ==6:
+    v = [Vertex(i) for i in range(3)]
+    G = {
+    v[0]:[v[1]],
+    v[1]:[],
+    v[2]:[v[0],v[1]],
+    }
+elif graaf ==7:
+    v = [Vertex(i) for i in range(8)]
+    G = {
+    v[0]:[v[1],v[2]],
+    v[1]:[v[0],v[3]],
+    v[2]:[v[0],v[3]],
+    v[3]:[v[1],v[2],v[4],v[6]],
+    v[4]:[v[5],v[7],v[6],v[3]],
+    v[5]:[v[4],v[6]],
+    v[6]:[v[3],v[4],v[5],v[7]],
+    v[7]:[v[6],v[4]]
+    }
 
 print("vertices(G):",vertices(G))
 print("edges(G):",edges(G))
