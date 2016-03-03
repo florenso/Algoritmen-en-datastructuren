@@ -58,7 +58,7 @@ def bracketsCheck(brackets):
     return stack.isEmpty()
 
 
-if bracketsCheck('[d(f<f>g)](banana)(( )( ))'):
+if bracketsCheck('[d(f<f>g)](banana)(( )( )))'):
     print('passed')
 else:
     print('failed')
