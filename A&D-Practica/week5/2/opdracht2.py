@@ -30,8 +30,42 @@ def edges(G):
             a.append((u,v))
     return a
 
-v = [Vertex(i) for i in range(5)]
-G = {v[0]:[v[1]],v[1]:[v[0],v[2],v[3],v[4]],v[2]:[v[1],v[3]],v[3]:[v[1],v[2]],v[4]:[]}
+graaf = 3
+G=None
+v=None
+if graaf == 1:
+    #eerste graaf
+    v = [Vertex(i) for i in range(8)]
+    G = {v[0]:[v[4],v[5]],
+    v[1]:[v[4],v[5],v[6]],
+    v[2]:[v[4],v[5],v[6]],
+    v[3]:[v[7]],
+    v[4]:[v[0],v[1],v[2],v[5]],
+    v[5]:[v[4],v[0],v[1],v[2]],
+    v[6]:[v[1],v[2]],
+    v[7]:[v[3]]}
+elif graaf == 2:
+    #tweede graaf
+    v = [Vertex(i) for i in range(7)]
+    G = {v[0]:[v[4],v[5]],
+    v[1]:[v[4],v[5],v[6]],
+    v[2]:[v[4],v[5],v[6]],
+    v[4]:[v[0],v[1],v[2],v[5]],
+    v[5]:[v[4],v[0],v[1],v[2]],
+    v[6]:[v[1],v[2]]}
+
+elif graaf == 3:
+    v = [Vertex(i) for i in range(8)]
+    G = {
+    v[0]:[v[5],v[4]],
+    v[1]:[v[4],v[6]],
+    v[2]:[v[5]],
+    v[3]:[v[7]],
+    v[4]:[v[0],v[1]],
+    v[5]:[v[0],v[2]],
+    v[6]:[v[1]],
+    v[7]:[v[3]]
+    }
 
 print("vertices(G):",vertices(G))
 print("edges(G):",edges(G))
@@ -68,11 +102,8 @@ def no_cycles(G):
                 v.predecessor = u # v krijgt het attribuut 'predecessor'
                 q.enqueue(v) # plaats de buren van v in de queue
             else:
-                if v.predecessor != u:
-                    
-    for dummy in V:
-        if dummy.distance== INFINITY:
-            return False
+                if v != u.predecessor and v.predecessor != None:
+                    return False
     return True
 
-print(is_connected(G))
+print(no_cycles(G))
