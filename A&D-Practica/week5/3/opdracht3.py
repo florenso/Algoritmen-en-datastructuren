@@ -37,7 +37,7 @@ def edges(G):
 # 5 = opgave 4.1
 # 6 = opgave 4.2
 # 7 = opgave 5.1
-graaf = 4
+graaf = 1
 G=None
 v=None
 if graaf == 1:
@@ -129,9 +129,8 @@ def show_tree_info(G):
 
 show_tree_info(G)
 
-def get_bridges(G):
+def is_connected(G, s, x):
     V = vertices(G)
-    s=V[0]
     s.predecessor = None # s krijgt het attribuut 'predecessor'
     s.distance = 0 # s krijgt het attribuut 'distance'
     for v in V:
@@ -146,18 +145,26 @@ def get_bridges(G):
                 v.distance = u.distance + 1
                 v.predecessor = u # v krijgt het attribuut 'predecessor'
                 q.enqueue(v) # plaats de buren van v in de queue
-            else:
-                if v != u.predecessor and v.predecessor != None:
-                    print("Verbonden")
-                    print("V: ", v)
-                    print("U: ", u)
-                    print("Vp: ", v.predecessor)
-                    print("Vd: ", v.distance)
+                if v == x:
+                    return True
+    return False
 
 
-    return True
+def get_bridges(G):
+    listOfEdges = edges(G)
+    allBridges = list()
+    for (first, second) in listOfEdges:
+        temp = dict(G)
+        valueslist = list(temp.get(first))
+        valueslist.remove(second)
+        temp.update({first:valueslist })
 
-print(get_bridges(G))
+        if is_connected(temp, first, second) == False:
+            allBridges.append((first, second))
+    return allBridges
+
+print("ALL BRIDGES: ",get_bridges(G))
+
 
 
 
