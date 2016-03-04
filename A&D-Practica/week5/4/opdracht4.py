@@ -1,4 +1,4 @@
-import queue
+import time
 
 INFINITY = float("inf")
 class myqueue( list):
@@ -31,6 +31,19 @@ def edges(G):
             a.append((u,v))
     return a
 
+def keerOm(G):
+    r = {}
+    for dummy in vertices(G):
+        r[dummy]=[]
+        pass
+    tmp = edges(G)
+    for a,b in tmp:
+        list = r.get(b)
+        list.append(a)
+        r[b]=list
+        pass
+    print("succes")
+    return r
 
 # 1 = opgave 1.1
 # 2 = opgave 1.2
@@ -39,7 +52,7 @@ def edges(G):
 # 5 = opgave 4.1
 # 6 = opgave 4.2
 # 7 = opgave 5.1
-graaf = 5
+graaf = 1
 G=None
 v=None
 if graaf == 1:
@@ -131,7 +144,7 @@ def show_tree_info(G):
 
 show_tree_info(G)
 
-def is_strongly_connected(G):
+def is_strongly_connected_med1(G):
 
     V = vertices(G)
     #s=V[0]
@@ -155,4 +168,45 @@ def is_strongly_connected(G):
                 return False
     return True
 
-print(is_strongly_connected(G))
+def is_strongly_connected(G,re=False):
+
+    V = vertices(G)
+    s=V[0]
+    #for s in V:
+    s.predecessor = None # s krijgt het attribuut 'predecessor'
+    s.distance = 0 # s krijgt het attribuut 'distance'
+    for v in V:
+        if v != s:
+            v.distance = INFINITY # v krijgt het attribuut 'distance'
+    q = myqueue()
+    q.enqueue(s) # plaats de startnode in de queue
+    while q:
+        u = q.dequeue()
+        for v in G[u]:
+            if v.distance == INFINITY: # v is nog niet bezocht
+                v.distance = u.distance + 1
+                v.predecessor = u # v krijgt het attribuut 'predecessor'
+                q.enqueue(v) # plaats de buren van v in de queue
+    for dummy in V:
+        if dummy.distance== INFINITY:
+            return False
+    if re == True and is_strongly_connected(keerOm(G),True) == False :
+        return False
+    return True
+
+
+start = time.clock()
+print("strong 1:",is_strongly_connected_med1(G))
+elapsed = time.clock()
+elapsed = elapsed - start
+print("Time spent in (function name) is: ", elapsed)
+
+start = time.clock()
+print("strong 2:",is_strongly_connected(G))
+elapsed = time.clock()
+elapsed = elapsed - start
+print("Time spent in (function name) is: ", elapsed)
+
+
+#print(edges(G))
+#print(edges(keerOm(G)))
