@@ -149,6 +149,7 @@ def is_connected(G):
                 v.distance = u.distance + 1
                 v.predecessor = u # v krijgt het attribuut 'predecessor'
                 q.enqueue(v) # plaats de buren van v in de queue
+
     for dummy in V:
         if dummy.distance== INFINITY:
             return False

@@ -129,10 +129,8 @@ def show_tree_info(G):
 
 show_tree_info(G)
 
-def is_Euler_graph(G):
-
+def is_connected(G, s, x):
     V = vertices(G)
-    s=V[0]
     s.predecessor = None # s krijgt het attribuut 'predecessor'
     s.distance = 0 # s krijgt het attribuut 'distance'
     for v in V:
@@ -142,16 +140,76 @@ def is_Euler_graph(G):
     q.enqueue(s) # plaats de startnode in de queue
     while q:
         u = q.dequeue()
-        count=0
         for v in G[u]:
-            count=count+1
             if v.distance == INFINITY: # v is nog niet bezocht
                 v.distance = u.distance + 1
                 v.predecessor = u # v krijgt het attribuut 'predecessor'
                 q.enqueue(v) # plaats de buren van v in de queue
-        #print("cound is",count)
-        if count%2!=0:
+                if v == x:
+                    return True
+    return False
+
+
+def get_bridges(G):
+    listOfEdges = edges(G)
+    allBridges = list()
+    for (first, second) in listOfEdges:
+        temp = dict(G)
+        valueslist = list(temp.get(first))
+        valueslist.remove(second)
+        temp.update({first:valueslist })
+
+        if is_connected(temp, first, second) == False:
+            allBridges.append((first, second))
+    return allBridges
+
+
+
+
+def is_Euler_graph(G):
+    for tmp in G:
+        if len(G.get(tmp))%2!=0:
             return False
     return True
 
-print(is_Euler_graph(G))
+def remove_Edge(G,n1,n2):
+
+    valueslist = list(G.get(n1))
+    valueslist.remove(n2)
+    G.update({n1:valueslist })
+
+    valueslist = list(G.get(n2))
+    if n1 in valueslist:
+        valueslist.remove(n1)
+        G.update({n2:valueslist})
+    return G
+
+def get_Euler_circuit(G,start):
+    if not is_Euler_graph(G):
+        return
+    pad = list()
+    pad.append(start)
+    it = v[start]
+    temp = dict(G)
+
+    while True:
+        bridges = get_bridges(temp)
+        succes = False
+        next=None
+        for woop in temp.get(it):
+            if (it,woop) not in bridges:
+                next= woop
+                succes = True
+                break
+        if succes == False:
+            next = temp.get(it)[0]
+        temp = remove_Edge(temp,it,next)
+        it=next
+        pad.append(next)
+        if next == v[start]:
+            break
+    return pad
+
+
+print("is_Euler_graph() =",is_Euler_graph(G))
+print("get_Euler_circuit() =",get_Euler_circuit(G,0))
